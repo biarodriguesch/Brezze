@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Vendas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,10 @@ class VendasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vendas = Vendas::orderBy('id','desc')->paginate(3);
+        $user = Auth::user();
+        $vendas = Vendas::where('id_usuario', $user['id'])->orderBy('id','desc')->paginate(3);
 
         return view('vendas.index', compact('vendas'));
     }
@@ -40,13 +42,16 @@ class VendasController extends Controller
     {
         $user = Auth::user();
 
+
         $request->validate([
             'produto' => 'required',
+            
         ]);
 
-        $request->merge(['banana' => 'prata']);
 
-        Vendas::create($request->all());
+        $request->merge(['id_usuario' => $user['id']]);
+
+        Vendas::create($request->input());
 
         return redirect()->route('vendas.index')
         ->with('success','Vendas created successfully.');

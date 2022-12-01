@@ -35,6 +35,7 @@
                                             class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $venda['produto'] }}
                                         </th>
+
                                         <th scope="row">
                                             <div class="flex">
                                                 <a href={{ route('vendas.edit', $venda->id) }} type="button"

@@ -15,6 +15,6 @@ class Vendas extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id');
+        return $this->belongsTo(User::class, 'id', 'id_usuario');
     }
 }

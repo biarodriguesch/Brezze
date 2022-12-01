@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
+            // criar id relacional e dps php artinsa migrate:fresh
+
             $table->string('produto');
             $table->timestamps();
         });

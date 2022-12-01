@@ -23,6 +23,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('vendas', VendasController::class)->middleware(['auth', 'verified']);
+Route::get('/deletarProduto/{id}', [VendasController::class, 'destroy'])->name('deletarProduto');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

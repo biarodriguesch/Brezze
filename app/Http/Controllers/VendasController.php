@@ -44,10 +44,9 @@ class VendasController extends Controller
             'produto' => 'required',
         ]);
 
-        // dd($request);
+        $request->merge(['banana' => 'prata']);
 
         Vendas::create($request->all());
-
 
         return redirect()->route('vendas.index')
         ->with('success','Vendas created successfully.');
@@ -73,7 +72,8 @@ class VendasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vendas = vendas::find($id);
+        return view('vendas.edit',compact('vendas'));
     }
 
     /**
@@ -85,7 +85,16 @@ class VendasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vendas = Vendas::find($id);
+        $request->validate([
+
+            'produto' => 'required',
+            ]);
+
+            $vendas->fill($request->post())->save();
+
+            return redirect()->route('vendas.index')
+            ->with('success','vendas updated successfully');
     }
 
     /**
@@ -96,6 +105,8 @@ class VendasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vendas = Vendas::find($id);
+        $vendas->Delete();
+        return redirect()->route('vendas.index')->with('success','Company has been deleted successfully');
     }
 }
